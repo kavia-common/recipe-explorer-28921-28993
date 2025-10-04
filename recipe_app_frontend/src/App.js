@@ -9,11 +9,16 @@ import { RecipesProvider } from './state/RecipesContext.jsx';
  * App
  * Minimal application shell using Ocean Professional theme.
  * Renders:
- * - Header with brand and placeholder search
- * - Main content area wrapped in Container
+ * - Header with brand and search
+ * - Recipe grid with loading/empty states
+ * - RecipeDetailModal for viewing a selected recipe
  * - Wrapped in RecipesProvider for global state management
  */
 function App() {
+  // Import components inline to keep template simple (avoid dynamic imports)
+  const RecipeGrid = require('./components/recipes/RecipeGrid.jsx').default;
+  const RecipeDetailModal = require('./components/recipes/RecipeDetailModal.jsx').default;
+
   return (
     <RecipesProvider>
       <div className="app-root bg-ocean-gradient">
@@ -31,26 +36,16 @@ function App() {
             </section>
 
             <div className="mt-4">
-              {/* Recipe results grid with loading/empty states */}
               <section aria-labelledby="results-title">
                 <h2 id="results-title" className="visually-hidden">Recipe results</h2>
-                {/* Lazy import avoided to keep it simple in template */}
-                {/* eslint-disable-next-line import/no-useless-path-segments */}
-                {require('./components/recipes/RecipeGrid.jsx').default({})}
-              </section>
-            </div>
-
-            <div className="mt-4">
-              {/* Recipe results grid with loading/empty states */}
-              <section aria-labelledby="results-title">
-                <h2 id="results-title" className="visually-hidden">Recipe results</h2>
-                {/* Lazy import avoided to keep it simple in template */}
-                {/* eslint-disable-next-line import/no-useless-path-segments */}
-                {require('./components/recipes/RecipeGrid.jsx').default({})}
+                <RecipeGrid ariaLabel="Recipe results" />
               </section>
             </div>
           </Container>
         </main>
+
+        {/* Modal portal within the app root (kept simple, no React portal to avoid extra complexity) */}
+        <RecipeDetailModal />
       </div>
     </RecipesProvider>
   );
