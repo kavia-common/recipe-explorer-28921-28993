@@ -1,47 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import './index.css';
+import Header from './components/layout/Header';
+import Container from './components/layout/Container';
 
-// PUBLIC_INTERFACE
+/**
+ * PUBLIC_INTERFACE
+ * App
+ * Minimal application shell using Ocean Professional theme.
+ * Renders:
+ * - Header with brand and placeholder search
+ * - Main content area wrapped in Container
+ */
 function App() {
-  const [theme, setTheme] = useState('light');
-
-  // Effect to apply theme to document element
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
-
-  // PUBLIC_INTERFACE
-  const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
-  };
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <button 
-          className="theme-toggle" 
-          onClick={toggleTheme}
-          aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-        >
-          {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
-        </button>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>
-          Current theme: <strong>{theme}</strong>
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="app-root bg-ocean-gradient">
+      <header className="app-header" role="banner">
+        <Container>
+          <Header />
+        </Container>
       </header>
+
+      <main className="app-main" role="main" aria-label="Main content">
+        <Container>
+          <section className="surface" style={{ padding: '1rem' }} aria-labelledby="welcome-title">
+            <h1 id="welcome-title" className="section-title">Welcome to Recipe Explorer</h1>
+            <p className="subtle">Start by searching for a recipe or browsing popular categories.</p>
+          </section>
+        </Container>
+      </main>
     </div>
   );
 }
