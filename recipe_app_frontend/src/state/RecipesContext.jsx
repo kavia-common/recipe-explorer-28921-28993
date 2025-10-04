@@ -54,6 +54,62 @@ export function RecipesProvider({ children }) {
     if (last) setQuery(last);
   }, []);
 
+  // On first mount: read selected id from URL (?id=...) and subscribe to popstate
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    // Initialize from URL
+    try {
+      const url = new URL(window.location.href);
+      const initialId = url.searchParams.get('id');
+      if (initialId) {
+        setSelectedRecipeId(initialId);
+      }
+    } catch {
+      // ignore
+    }
+
+    // Handle back/forward buttons
+    function onPopState() {
+      try {
+        const url = new URL(window.location.href);
+        const id = url.searchParams.get('id');
+        setSelectedRecipeId(id || null);
+      } catch {
+        // ignore
+      }
+    }
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
+
+  // On first mount: read selected id from URL (?id=...) and subscribe to popstate
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    // Initialize from URL
+    try {
+      const url = new URL(window.location.href);
+      const initialId = url.searchParams.get('id');
+      if (initialId) {
+        setSelectedRecipeId(initialId);
+      }
+    } catch {
+      // ignore
+    }
+
+    // Handle back/forward buttons
+    function onPopState() {
+      try {
+        const url = new URL(window.location.href);
+        const id = url.searchParams.get('id');
+        setSelectedRecipeId(id || null);
+      } catch {
+        // ignore
+      }
+    }
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
+
   // Load recipes and favorites
   const loadRecipes = useCallback(async () => {
     setLoading(true);
@@ -88,9 +144,39 @@ export function RecipesProvider({ children }) {
 
   // Open and close a recipe by id
   const openRecipe = useCallback((id) => {
-    setSelectedRecipeId(id || null);
+    const rid = id || null;
+    setSelectedRecipeId(rid);
+
+    // Optional routing sync (no-react-router fallback)
+    try {
+      if (typeof window !== 'undefined' && window.history && window.location) {
+        const url = new URL(window.location.href);
+        // Prefer path-style /recipe/:id only if app is configured for that; fallback to ?id
+        // Since we cannot assume react-router-dom is installed, we use query param.
+        if (rid) {
+          url.searchParams.set('id', String(rid));
+        } else {
+          url.searchParams.delete('id');
+        }
+        window.history.pushState({ rid }, '', url.toString());
+      }
+    } catch {
+      // ignore history errors
+    }
   }, []);
-  const closeRecipe = useCallback(() => setSelectedRecipeId(null), []);
+  const closeRecipe = useCallback(() => {
+    setSelectedRecipeId(null);
+    // Optional routing sync (no-react-router fallback)
+    try {
+      if (typeof window !== 'undefined' && window.history && window.location) {
+        const url = new URL(window.location.href);
+        url.searchParams.delete('id');
+        window.history.pushState({ rid: null }, '', url.toString());
+      }
+    } catch {
+      // ignore history errors
+    }
+  }, []);
 
   // Toggle favorite: updates local storage through api and updates state
   const toggleFavorite = useCallback(async (id) => {
