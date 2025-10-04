@@ -29,6 +29,26 @@ function App() {
               <h1 id="welcome-title" className="section-title">Welcome to Recipe Explorer</h1>
               <p className="subtle">Start by searching for a recipe or browsing popular categories.</p>
             </section>
+
+            <div className="mt-4">
+              {/* Recipe results grid with loading/empty states */}
+              <section aria-labelledby="results-title">
+                <h2 id="results-title" className="visually-hidden">Recipe results</h2>
+                {/* Lazy import avoided to keep it simple in template */}
+                {/* eslint-disable-next-line import/no-useless-path-segments */}
+                {require('./components/recipes/RecipeGrid.jsx').default({})}
+              </section>
+            </div>
+
+            <div className="mt-4">
+              {/* Recipe results grid with loading/empty states */}
+              <section aria-labelledby="results-title">
+                <h2 id="results-title" className="visually-hidden">Recipe results</h2>
+                {/* Lazy import avoided to keep it simple in template */}
+                {/* eslint-disable-next-line import/no-useless-path-segments */}
+                {require('./components/recipes/RecipeGrid.jsx').default({})}
+              </section>
+            </div>
           </Container>
         </main>
       </div>
