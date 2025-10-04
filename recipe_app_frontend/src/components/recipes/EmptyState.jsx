@@ -56,7 +56,7 @@ export default function EmptyState({ title = 'No results', message = 'Try changi
   };
 
   return (
-    <div style={wrap}>
+    <div style={wrap} role="region" aria-label="Empty state">
       <div className="surface" style={card}>
         <div style={iconWrap} aria-hidden="true">
           <Icon name="search" size={24} color="var(--color-primary)" />

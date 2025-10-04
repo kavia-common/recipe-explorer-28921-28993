@@ -19,7 +19,7 @@ export default function Header() {
   return (
     <header aria-label="Primary header">
       <nav
-        aria-label="Primary"
+        aria-label="Primary navigation"
         role="navigation"
         style={{
           display: 'grid',
@@ -31,7 +31,7 @@ export default function Header() {
         }}
       >
         {/* Brand */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }} aria-label="Recipe Explorer brand">
           <div
             aria-hidden="true"
             style={{
@@ -57,7 +57,7 @@ export default function Header() {
         </div>
 
         {/* Actions */}
-        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem' }} aria-label="Header actions">
           <Button variant="secondary" ariaLabel="View favorites">
             <Icon name="star" color="var(--color-secondary)" />
             Favorites

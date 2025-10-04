@@ -53,7 +53,10 @@ export default function RecipeGrid({ ariaLabel = 'Recipe results' }) {
   if (loading) {
     return (
       <section aria-label={ariaLabel} aria-busy="true" aria-live="polite">
-        <div className="recipe-grid" style={gridStyle}>
+        <div className="visually-hidden" aria-live="polite" aria-atomic="true">
+          Loading recipes…
+        </div>
+        <div className="recipe-grid" style={gridStyle} role="list">
           {Array.from({ length: 8 }).map((_, i) => (
             <RecipeSkeleton key={i} />
           ))}
@@ -67,6 +70,9 @@ export default function RecipeGrid({ ariaLabel = 'Recipe results' }) {
   if (!loading && (error || !filtered || filtered.length === 0)) {
     return (
       <section aria-label={ariaLabel} aria-live="polite">
+        <div className="visually-hidden" aria-live="polite" aria-atomic="true">
+          {error ? 'Error loading recipes' : 'No recipes found'}
+        </div>
         <EmptyState
           title={error ? 'Something went wrong' : 'No recipes found'}
           message={
@@ -84,7 +90,10 @@ export default function RecipeGrid({ ariaLabel = 'Recipe results' }) {
   // Normal grid
   return (
     <section aria-label={ariaLabel}>
-      <div className="recipe-grid" style={gridStyle}>
+      <div className="visually-hidden" aria-live="polite" aria-atomic="true">
+        Showing {filtered.length} recipes
+      </div>
+      <div className="recipe-grid" style={gridStyle} role="list">
         {filtered.map((r) => (
           <RecipeCard
             key={r.id}

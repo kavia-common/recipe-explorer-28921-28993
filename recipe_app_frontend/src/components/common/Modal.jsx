@@ -146,6 +146,10 @@ export default function Modal({
       aria-hidden={false}
       style={overlayStyle}
     >
+      {/* Live region to announce dialog open politely */}
+      <div className="visually-hidden" aria-live="polite" aria-atomic="true">
+        Dialog open
+      </div>
       <div
         ref={contentRef}
         role="dialog"
@@ -160,8 +164,8 @@ export default function Modal({
       </div>
       <style>{`
         .modal-content:focus-visible {
-          outline: 3px solid rgba(37,99,235,0.55);
-          outline-offset: 2px;
+          outline: var(--focus-ring);
+          outline-offset: var(--focus-offset);
         }
       `}</style>
     </div>

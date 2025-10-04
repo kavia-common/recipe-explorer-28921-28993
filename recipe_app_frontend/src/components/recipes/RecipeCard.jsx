@@ -114,7 +114,7 @@ export default function RecipeCard({ recipe, isFavorite = false, onOpen, onToggl
   const cookTimeText = typeof cookTime === 'number' ? `${cookTime} min` : null;
 
   return (
-    <article className="card" style={cardStyle}>
+    <article className="card" style={cardStyle} role="listitem">
       <div style={imgWrapStyle}>
         <img
           src={image}

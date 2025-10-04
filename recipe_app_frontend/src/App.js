@@ -23,13 +23,22 @@ export default function App() {
   return (
     <RecipesProvider>
       <div className="app-root bg-ocean-gradient">
+        {/* Skip link for keyboard users */}
+        <a href="#main-content" className="skip-link">Skip to content</a>
+
         <header className="app-header" role="banner">
           <Container>
             <Header />
           </Container>
         </header>
 
-        <main className="app-main" role="main" aria-label="Main content">
+        <main
+          id="main-content"
+          className="app-main"
+          role="main"
+          aria-label="Main content"
+          tabIndex="-1"
+        >
           <Home />
         </main>
 

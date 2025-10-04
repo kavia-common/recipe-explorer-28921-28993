@@ -14,7 +14,7 @@ export default function SearchBar({
   placeholder = 'Search recipes by name, ingredient...',
   ariaLabel = 'Search recipes',
 }) {
-  const { query, setSearch } = useRecipes();
+  const { query, setSearch, filtered, loading } = useRecipes();
   const [value, setValue] = useState(query || '');
   const debounceRef = useRef(null);
   const inputRef = useRef(null);
@@ -100,13 +100,16 @@ export default function SearchBar({
         <button
           type="button"
           onClick={value ? clear : undefined}
-          aria-label="Clear search"
+          aria-label={value ? 'Clear search' : 'Clear search (disabled)'}
           title="Clear"
           style={clearBtnStyle}
           disabled={!value}
         >
           <Icon name="close" ariaHidden />
         </button>
+      </div>
+      <div className="visually-hidden" aria-live="polite" aria-atomic="true">
+        {loading ? 'Searching recipes…' : `Showing ${Array.isArray(filtered) ? filtered.length : 0} recipes`}
       </div>
     </div>
   );

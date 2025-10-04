@@ -145,7 +145,7 @@ export default function RecipeDetailModal() {
               </h2>
               <button
                 type="button"
-                aria-label="Close"
+                aria-label="Close dialog"
                 title="Close"
                 onClick={closeRecipe}
                 style={closeBtnStyle}

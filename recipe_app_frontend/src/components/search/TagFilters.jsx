@@ -66,7 +66,7 @@ export default function TagFilters({
   const items = useMemo(() => availableTags.map((t) => String(t)), [availableTags]);
 
   return (
-    <div aria-label={ariaLabel}>
+    <div role="group" aria-label={ariaLabel}>
       <div style={containerStyle}>
         {items.map((tag) => {
           const active = selected.has(tag);
